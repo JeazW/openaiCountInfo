@@ -8,3 +8,5 @@ openai账户api-key信息查询单页文件
 
 ## 支持遭封禁账号检测
 ![image](https://user-images.githubusercontent.com/75829171/230345562-89a1aad5-56ab-4977-9f8c-5ec95bd26c5a.png)
+
+感谢大佬的代理链接[openai.1rmb.tk](https://github.com/x-dr/chatgptProxyAPI)
