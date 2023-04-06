@@ -1,203 +1,310 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>API-KEY 信息查询</title>
-    <style>
-      body {
+	<meta charset="UTF-8" />
+	<title>API-KEY信息查询(不要用国内IP使用官口，切记)</title>
+	<link rel="icon" href="data:image/png;base64,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
+">
+	<style>
+		body {
         background-color: #497e7e;
-        font-family: Arial, sans-serif;
-        text-align: center;
       }
-      input[type="text"] {
+      table {
+        margin: auto;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+        color: #000000;
+        border: 1px solid #000000;
+      }
+      th:first-child,
+      td:first-child {
+        width: 520px;
+      }
+      h1 {
+        text-align: center;
+        color: #000000;
+      }
+      form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      textarea#api-key-input {
+        width: 430px;
+        font-size: 16px;
         padding: 10px;
-        margin: 10px;
-        border-radius: 20px;
+        margin-right: 10px;
+        border-radius: 5px;
         border: none;
+        resize: vertical;
+        rows: 8;
+      }
+      select#api-url-select,
+      input#custom-url-input {
         width: 300px;
+        height: 50px;
+        font-size: 16px;
+        background-color: #212121;
+        border-radius: 5px;
+        color: #ffffff;
+        border: none;
+        margin-right: 10px;
+      }
+      input#custom-url-input {
+        display: none;
       }
       button {
+        height: 50px;
+        font-size: 16px;
         background-color: #ff8c00;
-        color: white;
-        border-radius: 20px;
+        color: #ffffff;
         border: none;
-        padding: 10px 20px;
+        border-radius: 5px;
         cursor: pointer;
       }
-      .result {
-        margin-top: 50px;
+      .status-ok {
+        color: #2d8d2d;
+      }
+      .status-error {
+        color: #7e1707;
+      }
+      tr:nth-child(even) {
+        /* 将偶数行背景色改为深蓝色 */
         background-color: #f1d39c;
-        padding: 20px;
-        border-radius: 20px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-        display: none;
-        width: 600px;
-        height: 400px;
       }
-      .error {
-        margin-top: 50px;
-        background-color: #ffb6c1;
-        padding: 20px;
-        border-radius: 20px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        color: #800000;
-        font-weight: bold;
-      }
-      .label {
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-      label[for="apiUrlInput"] {
-        color: #000;
+      tr:nth-child(odd) {
+        /* 将偶数行背景色改为深蓝色 */
+        background-color: #f1d39c;
       }
     </style>
-  </head>
-  <body>
-    <h1>API-KEY 信息查询</h1>
-    <label for="apiUrlInput">API链接：</label>
-    <select id="apiUrlInput" onchange="onApiUrlChange()">
-      <option value="https://openai.1rmb.tk">
-        【社区反代】 https://openai.1rmb.tk
-      </option>
-      <option value="https://api.openai.com">
-        【官方,需科学】 https://api.openai.com
-      </option>
-      <option value="custom">自定义 ...</option>
-    </select>
-    <input
-      type="text"
-      id="apiUrlCustom"
-      placeholder="请输入API链接"
-      style="display: none"
-    />
-    <input type="text" id="apiKeyInput" placeholder="YOUR_KEY" />
-    <button onclick="sendCurlRequest()">发送请求</button>
-    <div class="result" id="resultSection">
-      <p class="label">总余额：</p>
-      <p class="value" id="totalGranted"></p>
-      <p class="label">已使用：</p>
-      <p class="value" id="totalUsed"></p>
-      <p class="label">剩余额度：</p>
-      <p class="value" id="totalAvailable"></p>
-      <p class="label">有效期起：</p>
-      <p class="value" id="effectiveAt"></p>
-      <p class="label">有效期止：</p>
-      <p class="value" id="expiresAt"></p>
-    </div>
-    <div class="error" id="errorSection" style="display: none">
-      <p id="errorMessage"></p>
-    </div>
-    <script>
-      const resultSection = document.getElementById("resultSection");
-      const errorSection = document.getElementById("errorSection");
-      let timeoutId;
-      function onApiUrlChange() {
-        const apiUrlSelect = document.getElementById("apiUrlInput");
-        const apiUrlCustom = document.getElementById("apiUrlCustom");
-        if (apiUrlSelect.value === "custom") {
-          apiUrlCustom.style.display = "inline";
-        } else {
-          apiUrlCustom.style.display = "none";
-        }
-      }
-      function sendCurlRequest() {
-        const apiUrlSelect = document.getElementById("apiUrlInput");
-        const apiUrlCustom = document.getElementById("apiUrlCustom").value;
-        const apiUrl =
-          apiUrlSelect.value === "custom" ? apiUrlCustom : apiUrlSelect.value;
-        const apiKey = document.getElementById("apiKeyInput").value;
-        const url = `${apiUrl}/dashboard/billing/credit_grants`;
+	</head>
+	<body>
+		<h1>API-KEY信息查询(不要用国内IP使用官口，切记)</h1>
+		<form>
+			<textarea id="api-key-input" placeholder="请输入API KEY，每行一个"></textarea>
+			<div style="display: flex; align-items: flex-end">
+				<select id="api-url-select">
+					<option value="https://openai.1rmb.tk">【社区反代】 https://openai.1rmb.tk</option>
+					<option value="https://api.openai.com">【官方,需科学】 https://api.openai.com</option>
+					<option value="custom">自定义 ...</option>
+				</select>
+				<input type="text" id="custom-url-input" placeholder="请输入自定义API链接" />
+			</div>
+			<button type="button" onclick="sendRequest()">发送请求</button>
+		</form>
+		<table id="result-table">
+			<thead>
+				<tr>
+					<th>API KEY</th>
+					<th style="width: 50px">总额度</th>
+					<th style="width: 185px">已使用</th>
+					<th style="width: 90px">剩余额度</th>
+<!--					<th style="width: 120px">有效期开始</th>-->
+					<th style="width: 120px">有效期结束</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<script>
+			// 定义查询过的API-KEY列表
+			      let queriedApiKeys = [];
+			
+			async function checkBilling(apiKey) {
+			  // 计算起始日期和结束日期
+			  const endDate = new Date();
+			  const startDate = new Date(endDate.getTime() - 90 * 24 * 60 * 60 * 1000);
+			
+			  // 格式化日期函数
+			  function formatDate(date) {
+			    const year = date.getFullYear();
+			    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+			    const day = date.getDate().toString().padStart(2, "0");
+			    return `${year}-${month}-${day}`;
+			  }
+			
+			  // 设置API请求URL和请求头
+			  const urlSubscription = 'https://openai.1rmb.tk/v1/dashboard/billing/subscription'; // 查是否订阅
+			  const urlUsage = `https://openai.1rmb.tk/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
+			  const headers = {
+			    "Authorization": "Bearer " + apiKey,
+			    "Content-Type": "application/json"
+			  };
+			
+			  try {
+			    // 获取API限额
+			    let response = await fetch(urlSubscription, {headers});
+			    if (!response.ok) {
+			      console.log("您的账户已被封禁，请登录OpenAI进行查看。");
+			      return;
+			    }
+			    const subscriptionData = await response.json();
+			    const totalAmount = subscriptionData.hard_limit_usd;
+			
+			    // 获取已使用量
+				const endDate = subscriptionData.access_until * 1000;
+			    const startDate = new Date(endDate - 90 * 24 * 60 * 60 * 1000).getTime(); // 开始时间为结束时间减去90天
+			    const urlUsageWithDates = `${urlUsage}?start_date=${new Date(startDate).toISOString()}&end_date=${new Date(endDate).toISOString()}`;
+			    response = await fetch(urlUsage, {headers});
+			    const usageData = await response.json();
+			    const totalUsage = usageData.total_usage / 100;
+			
+			    // 计算剩余额度
+			    const remaining = totalAmount - totalUsage;
+			
+			    // 计算开始时间和结束时间
+			    const endDateString = new Date(subscriptionData.access_until * 1000).toLocaleDateString();
+			    const startDateString = new Date(startDate).toLocaleDateString();
+				
+			    // 输出总用量、总额及余额信息
+			    console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
+			    console.log(`Used: ${totalUsage.toFixed(2)}`);
+			    console.log(`Remaining: ${remaining.toFixed(2)}`);
+			
+			    return [totalAmount,totalUsage, remaining, startDateString, endDateString];
+			
+			  } catch (error) {
+			    console.error(error);
+			    return [null, null, null, null, null];
+			  }
+			}
+			      function formatDate(date) {
+			        const year = date.getFullYear();
+			        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+			        const day = date.getDate().toString().padStart(2, '0');
+			
+			        return `${year}-${month}-${day}`;
+			      }
+			
+			      function sendRequest() {
+			        let apiKeyInput = document.getElementById("api-key-input");
+			        let apiUrlSelect = document.getElementById("api-url-select");
+			        let customUrlInput = document.getElementById("custom-url-input");
+			
+			        if (apiKeyInput.value.trim() === "") {
+			          alert("请填写API KEY");
+			          return;
+			        }
+			
+			        // 添加以下一行代码，清空之前的结果信息
+			        document.getElementById("result-table").getElementsByTagName('tbody')[0].innerHTML = "";
+			
+			        let apiUrl = "";
+			        if (apiUrlSelect.value === "custom") {
+			          if (customUrlInput.value.trim() === "") {
+			            alert("请设置API链接");
+			            return;
+			          } else {
+			            apiUrl = customUrlInput.value.trim();
+			          }
+			        } else {
+			          apiUrl = apiUrlSelect.value;
+			        }
+			
+			        let apiKeys = apiKeyInput.value.trim().split("\n");
+			
+			        let tableBody = document.querySelector("#result-table tbody");
+			        for (let i = 0; i < apiKeys.length; i++) {
+			          let apiKey = apiKeys[i].trim();
+			          // 判断是否已经查询过
+			          if (queriedApiKeys.includes(apiKey)) {
+			            console.log(`API KEY ${apiKey} 已查询过，跳过此次查询`);
+			            continue;
+			          }
+			          queriedApiKeys.push(apiKey);
+			
+			          checkBilling(apiKey).then((data) => {
+			            // update table with data
+			            let row = document.createElement("tr");
+						
+			            // 隐藏API KEY部分信息
+			            const hiddenApiKey = apiKey.substring(0, 7) + "*******************" + apiKey.substring(47);
+			
+			            // API KEY
+			            let apiKeyCell = document.createElement("td");
+			            apiKeyCell.textContent = hiddenApiKey;
+			            row.appendChild(apiKeyCell);
+			
+			            if (data[0] === null) {
+			              // ERROR MESSAGE
+			              let errorMessageCell = document.createElement("td");
+			              errorMessageCell.colSpan = "6";
+			              errorMessageCell.classList.add("status-error");
+			              errorMessageCell.textContent = "不正确或已失效的API-KEY";
+			              row.appendChild(errorMessageCell);
+			            } else {
+			              // TOTAL GRANTED
+			              let totalGrantedCell = document.createElement("td");
+			              totalGrantedCell.textContent = data[0].toFixed(2);
+			              row.appendChild(totalGrantedCell);
+			
+			              // TOTAL USED
+			              let totalUsedCell = document.createElement("td");
+			              totalUsedCell.textContent = data[1].toFixed(2);
+			              row.appendChild(totalUsedCell);
+			
+			              // TOTAL AVAILABLE
+			              let totalAvailableCell = document.createElement("td");
+			              totalAvailableCell.textContent = data[2].toFixed(2);
+			              row.appendChild(totalAvailableCell);
+			              
+			              // START DATE
+//			              let startDateCell = document.createElement("td");
+//			              startDateCell.textContent = data[3];
+//			              row.appendChild(startDateCell);
+			              
+			              // END DATE
+			              let endDateCell = document.createElement("td");
+			              endDateCell.textContent = data[4];
+			              row.appendChild(endDateCell);
+			            }
+			
+			            tableBody.appendChild(row);
+			
+			            // 添加以下代码，查询完成后删除已查询的API-KEY
+			            if (i === apiKeys.length - 1) {
+			              queriedApiKeys = [];
+			            }
+			          }).catch((error) => {
+			            console.error(error);
+			            // update table with error message
+			            let row = document.createElement("tr");
+			            let apiKeyCell = document.createElement("td");
+			            apiKeyCell.textContent = apiKey;
+			            row.appendChild(apiKeyCell);
+			
+			            let errorMessageCell = document.createElement("td");
+			            errorMessageCell.colSpan = "6";
+			            errorMessageCell.style.width = "90px";
+			            errorMessageCell.classList.add("status-error");
+			            errorMessageCell.textContent =
+			              "API请求失败，请检查其有效性或网络情况";
+			            row.appendChild(errorMessageCell);
+			
+			            tableBody.appendChild(row);
+			
+			            // 添加以下代码，查询完成后删除已查询的API-KEY
+			            if (i === apiKeys.length - 1) {
+			              queriedApiKeys = [];
+			            }
+			          });
+			        }
+			      }
+			
+			      let apiUrlSelect = document.getElementById("api-url-select");
+			      let customUrlInput = document.getElementById("custom-url-input");
+			
+			      apiUrlSelect.addEventListener("change", function () {
+			        if (apiUrlSelect.value === "custom") {
+			          customUrlInput.style.display = "inline-block";
+			        } else {
+			          customUrlInput.style.display = "none";
+			        }
+			      });
+		</script>
+	</body>
 
-        if (!apiUrl) {
-          alert("请设置API链接");
-          return;
-        }
-        if (!apiKey) {
-          alert("请填写API KEY");
-          return;
-        }
-        const options = {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${apiKey}`
-          }
-        };
-
-        timeoutId = setTimeout(() => {
-          displayError(new Error("API链接无响应，请检查其有效性或网络情况"));
-        }, 5000);
-
-        fetch(url, options)
-          .then((response) => {
-            clearTimeout(timeoutId);
-            if (!response.ok) {
-              return response.json().then((error) => {
-                throw new Error(error.error.message);
-              });
-            }
-            return response.json();
-          })
-          .then((responseJson) => displayResult(responseJson))
-          .catch((error) => displayError(error));
-      }
-
-      function displayResult(result) {
-        const totalGrantedElement = document.getElementById("totalGranted");
-        const totalUsedElement = document.getElementById("totalUsed");
-        const totalAvailableElement = document.getElementById("totalAvailable");
-        const effectiveAtElement = document.getElementById("effectiveAt");
-        const expiresAtElement = document.getElementById("expiresAt");
-
-        totalGrantedElement.innerText = result.total_granted;
-        totalUsedElement.innerText = result.total_used;
-        totalAvailableElement.innerText = result.total_available;
-        effectiveAtElement.innerText =
-          "从 " + formatDate(result.grants.data[0].effective_at) + " 开始";
-        expiresAtElement.innerText =
-          "到 " + formatDate(result.grants.data[0].expires_at) + " 结束";
-
-        resultSection.style.display = "block";
-        errorSection.style.display = "none";
-      }
-
-      function displayError(error) {
-        clearTimeout(timeoutId);
-        const errorMessageElement = document.getElementById("errorMessage");
-        if (error.name === "AbortError") {
-          errorMessageElement.innerText =
-            "API链接无响应，请检查其有效性或网络情况";
-        } else if (error.message.includes("Incorrect API key provided")) {
-          errorMessageElement.innerText = "请检查API-KEY是否正确";
-        }else if (error.message.includes("This key is")) {
-          errorMessageElement.innerText = "您的openai账号已被封禁";
-        } else {
-          errorMessageElement.innerText =
-            "API链接无响应，请检查其有效性或网络情况";
-        }
-        resultSection.style.display = "none";
-        errorSection.style.display = "block";
-      }
-
-      function formatDate(timestamp) {
-        const date = new Date(timestamp * 1000);
-        const year = date.getFullYear();
-        const month = addLeadingZero(date.getMonth() + 1);
-        const day = addLeadingZero(date.getDate());
-        const hour = addLeadingZero(date.getHours());
-        const minute = addLeadingZero(date.getMinutes());
-        const second = addLeadingZero(date.getSeconds());
-        return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-      }
-
-      function addLeadingZero(number) {
-        return number < 10 ? "0" + number : number;
-      }
-    </script>
-  </body>
 </html>
