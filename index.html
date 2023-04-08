@@ -129,9 +129,10 @@
 				const startDate = new Date(endDate.getTime() - 90 * 24 * 60 * 60 * 1000);
 
 				// 设置API请求URL和请求头
-				const apiUrl = document.getElementById("api-url-select").value;
+				const apiUrl = document.getElementById("api-url-select").value === "custom" ? document.getElementById("custom-url-input").value : document.getElementById("api-url-select").value;
 				const urlSubscription = `${apiUrl}/v1/dashboard/billing/subscription`;
 				const urlUsage = `${apiUrl}/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`;
+
 				const headers = {
 					"Authorization": "Bearer " + apiKey,
 					"Content-Type": "application/json"
@@ -263,5 +264,4 @@
 			})(document.getElementById("api-url-select"), document.getElementById("custom-url-input"));
 		</script>
 	</body>
-
 </html>
