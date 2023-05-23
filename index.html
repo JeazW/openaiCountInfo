@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--230523升级,增加了绑卡信息、支持模型的显示-->
 <!--230515修复,修复了错误提示-->
 <!--230406修复,加了截止日期显示，隐藏列表中的ApiKey部分信息-->
 <!--230402修复,加了去重功能适应了官方查询接口变化-->
@@ -108,6 +109,8 @@
           <th style="width: 185px">已使用</th>
           <th style="width: 90px">剩余额度</th>
 		  <th style="width: 90px">截止日期</th>
+		  <th style="width: 120px">最高模型</th>
+		  <th style="width: 120px">是否绑卡</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -116,57 +119,72 @@
       // 定义查询过的API-KEY列表
       let queriedApiKeys = [];
 
-      async function checkBilling(apiKey,apiUrl) {
-        // 计算起始日期和结束日期
-        const now = new Date();
-        const startDate = new Date(now - 90 * 24 * 60 * 60 * 1000);
-        const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+async function checkBilling(apiKey, apiUrl) {
+  // 计算起始日期和结束日期
+  const now = new Date();
+  const startDate = new Date(now - 90 * 24 * 60 * 60 * 1000);
+  const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
-        // 设置API请求URL和请求头
-        const urlSubscription = `${apiUrl}/v1/dashboard/billing/subscription`; // 查是否订阅
-        const urlBalance = `${apiUrl}/dashboard/billing/credit_grants`; // 查普通账单
-        const urlUsage = `${apiUrl}/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
-        const headers = {
-          "Authorization": "Bearer " + apiKey,
-          "Content-Type": "application/json"
-        };
+  // 设置API请求URL和请求头
+  const urlSubscription = `${apiUrl}/v1/dashboard/billing/subscription`; // 查是否订阅
+  const urlBalance = `${apiUrl}/dashboard/billing/credit_grants`; // 查普通账单
+  const urlUsage = `${apiUrl}/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
+  const headers = {
+    "Authorization": "Bearer " + apiKey,
+    "Content-Type": "application/json"
+  };
 
-        try {
-          // 获取API限额
-          let response = await fetch(urlSubscription, {headers});
-          if (!response.ok) {
-            console.log("您的账户已被封禁，请登录OpenAI进行查看。");
-            return;
-          }
-          const subscriptionData = await response.json();
-          const totalAmount = subscriptionData.hard_limit_usd;
+  try {
+    // 获取API限额
+    let response = await fetch(urlSubscription, {headers});
+    if (!response.ok) {
+      console.log("您的账户已被封禁，请登录OpenAI进行查看。");
+      return;
+    }
+    const subscriptionData = await response.json();
+    const totalAmount = subscriptionData.hard_limit_usd;
 
-          // 获取已使用量
-          response = await fetch(urlUsage, {headers});
-          const usageData = await response.json();
-          const totalUsage = usageData.total_usage / 100;
+    // 获取已使用量
+    response = await fetch(urlUsage, {headers});
+    const usageData = await response.json();
+    const totalUsage = usageData.total_usage / 100;
 
-          // 计算剩余额度
-          const remaining = totalAmount - totalUsage;
+    // 计算剩余额度
+    const remaining = totalAmount - totalUsage;
 
-		  // 计算截止日期
-          const lastDate = new Date(subscriptionData.access_until * 1000);
-          const year = lastDate.getFullYear();
-          const month = lastDate.getMonth() + 1;
-          const day = lastDate.getDate();
-          const endDateString = year + '-' + month + '-' + day;
+    // 计算截止日期
+    const lastDate = new Date(subscriptionData.access_until * 1000);
+    const year = lastDate.getFullYear();
+    const month = lastDate.getMonth() + 1;
+    const day = lastDate.getDate();
+    const endDateString = year + '-' + month + '-' + day;
 
-          // 输出总用量、总额及余额信息
-          console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
-          console.log(`Used: ${totalUsage.toFixed(2)}`);
-          console.log(`Remaining: ${remaining.toFixed(2)}`);
-          console.log(`End Date: ${endDateString}`);		  
-          return [totalAmount, totalUsage, remaining, endDateString];
-        } catch (error) {
-          console.error(error);
-          return [null, null, null, null];
-        }
-      }
+    // 获取has_payment_method
+    const hasPaymentMethod = subscriptionData.has_payment_method ? 'Yes' : 'No';
+
+    // 输出总用量、总额及余额信息
+    console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
+    console.log(`Used: ${totalUsage.toFixed(2)}`);
+    console.log(`Remaining: ${remaining.toFixed(2)}`);
+    console.log(`End Date: ${endDateString}`);
+	
+    // 获取apiKey支持的最高GPT模型
+    const modelUrl = `${apiUrl}/v1/models`;
+    response = await fetch(modelUrl, { headers });
+    const data = await response.json();
+    let gptModels = data.data.filter(model => model.id.includes("gpt"));
+    let highestGPTModel = gptModels.reduce((prev, current) => {
+      let prevVersion = parseFloat(prev.id.split("-")[1]);
+      let currentVersion = parseFloat(current.id.split("-")[1]);
+      return (currentVersion > prevVersion) ? current : prev;
+    });
+    
+    return [totalAmount, totalUsage, remaining, endDateString, highestGPTModel.id, hasPaymentMethod];
+  } catch (error) {
+    console.error(error);
+    return [null, null, null, null, null];
+  }
+}
 
       function formatDate(date) {
         const year = date.getFullYear();
@@ -228,7 +246,7 @@
             if (data[0] === null) {
               // ERROR MESSAGE
               let errorMessageCell = document.createElement("td");
-              errorMessageCell.colSpan = "4";
+              errorMessageCell.colSpan = "6";
               errorMessageCell.classList.add("status-error");
               errorMessageCell.textContent = "API请求失败，请检查其有效性或网络情况";
               row.appendChild(errorMessageCell);
@@ -251,7 +269,18 @@
               // END DATE
               let endDateCell = document.createElement("td");
               endDateCell.textContent = data[3];
-              row.appendChild(endDateCell);			  
+              row.appendChild(endDateCell);	
+
+              // highestGPTModel
+              let highestGPTModel = document.createElement("td");
+              highestGPTModel.textContent = data[4];
+              row.appendChild(highestGPTModel);			
+
+              // hasPaymentMethod
+              let hasPaymentMethod = document.createElement("td");
+              hasPaymentMethod.textContent = data[5];
+              row.appendChild(hasPaymentMethod);	
+			  
             }
 
             tableBody.appendChild(row);
@@ -269,7 +298,7 @@
             row.appendChild(apiKeyCell);
 
             let errorMessageCell = document.createElement("td");
-            errorMessageCell.colSpan = "4";
+            errorMessageCell.colSpan = "6";
             errorMessageCell.style.width = "90px";
             errorMessageCell.classList.add("status-error");
             errorMessageCell.textContent =
