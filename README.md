@@ -1,4 +1,8 @@
 # openaiCountInfo
+
+## 230523更新：支持绑卡信息、最高模型的显示
+![image](https://github.com/JeazW/openaiCountInfo/assets/75829171/46fd22d0-84a0-418d-b383-9976460ee189)
+
 openai账户api-key信息查询单页文件
 ## 支持批量查询余额、时间等信息
 ![090d4e3a66cf9b7446bb463754fcbb0](https://user-images.githubusercontent.com/75829171/230343716-454af68c-d7c8-4b09-a01a-63a583999da0.png)
